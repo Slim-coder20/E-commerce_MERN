@@ -2,6 +2,8 @@
 import express from "express"; // Framework web pour Node.js (crée le serveur HTTP)
 import mongoose from "mongoose"; // ODM (Object Data Modeling) pour MongoDB
 import userRoute from "./routes/userRoute.js";
+import { seedInitialProducts } from "./services/productService.js";
+import productRoute from "./routes/productRoute.js";
 
 // Création de l'application Express
 // app sera notre serveur web qui va gérer les requêtes HTTP
@@ -31,6 +33,11 @@ mongoose
 
 // Routes pour les utilisateurs (Create, Read, Update, Delete)
 app.use("/user", userRoute);
+app.use("/products", productRoute);
+
+// Initialiser les produits
+seedInitialProducts();
+
 
 // ============================================================
 // DÉMARRAGE DU SERVEUR HTTP
