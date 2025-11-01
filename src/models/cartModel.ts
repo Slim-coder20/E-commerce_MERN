@@ -1,12 +1,9 @@
-import mongoose, { Schema, Document, ObjectId } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+import type { ObjectId } from "mongoose";
 import type { IProduct } from "./productModel.js";
-
-
 
 // Enum pour le statut du panier
 const CartStatusEnum = ["active", "completed"];
-
-
 
 // Interface pour un item de panier
 export interface ICartItem extends Document {
@@ -36,15 +33,12 @@ const CartItemSchema = new Schema<ICartItem>({
 // Schema pour le panier
 // Schema permet de définir la structure de la collection
 // Document est l'interface de base pour tous les documents Mongoose
-const CartSchema = new Schema<ICart>(
-  {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    items: { type: [CartItemSchema], required: true },
-    totalAmount: { type: Number, required: true, default: 0 },
-    status: { type: String, enum: CartStatusEnum, default: "active" },
-  }
-  
-);
+const CartSchema = new Schema<ICart>({
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  items: { type: [CartItemSchema], required: false, default: [] },
+  totalAmount: { type: Number, required: false, default: 0 },
+  status: { type: String, enum: CartStatusEnum, default: "active" },
+});
 
 // Création du modèle MongoDB
 // mongoose.model est une méthode pour créer un modèle MongoDB

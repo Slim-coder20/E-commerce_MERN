@@ -24,20 +24,22 @@ app.use(express.json());
 // Utilisation de mongoose.connect() pour se connecter à MongoDB
 // L'URL de connexion pointe vers MongoDB local sur le port par défaut (27017)
 // et la base de données s'appelle "ecommerce"
-mongoose
-  .connect("mongodb://localhost:27017/ecommerce")
-  // En cas de succès: affiche un message de confirmation
-  .then(() => console.log("Mongo connected"))
-  // En cas d'erreur: affiche le message d'erreur pour le débogage
-  .catch((err) => console.log("Failed to connect", err));
 
 // Routes pour les utilisateurs (Create, Read, Update, Delete)
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/cart", cartRoute);
 
-// Initialiser les produits
-seedInitialProducts();
+// Initialiser les produits (après la connexion à MongoDB)
+mongoose
+  .connect("mongodb://localhost:27017/ecommerce")
+  .then(() => {
+    console.log("Mongo connected");
+    seedInitialProducts().catch((err) => {
+      console.log("Failed to seed products", err);
+    });
+  })
+  .catch((err) => console.log("Failed to connect", err));
 
 
 // ============================================================

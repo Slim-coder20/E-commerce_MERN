@@ -10,8 +10,12 @@ interface CreateCartForUser {
   // Si l'utilisateur a un panier, retourne le panier existant
 }
 const createCartForUser = async ({ userId }: CreateCartForUser) => {
-  const cart = await cartModel.create({ userId });
-  await cart.save();
+  const cart = await cartModel.create({ 
+    userId,
+    items: [],
+    totalAmount: 0,
+    status: "active"
+  });
   return cart;
 };
 
