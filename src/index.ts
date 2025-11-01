@@ -4,7 +4,7 @@ import mongoose from "mongoose"; // ODM (Object Data Modeling) pour MongoDB
 import userRoute from "./routes/userRoute.js";
 import { seedInitialProducts } from "./services/productService.js";
 import productRoute from "./routes/productRoute.js";
-
+import cartRoute from "./routes/cartRoute.js";
 // Création de l'application Express
 // app sera notre serveur web qui va gérer les requêtes HTTP
 const app = express();
@@ -34,6 +34,7 @@ mongoose
 // Routes pour les utilisateurs (Create, Read, Update, Delete)
 app.use("/user", userRoute);
 app.use("/products", productRoute);
+app.use("/cart", cartRoute);
 
 // Initialiser les produits
 seedInitialProducts();
